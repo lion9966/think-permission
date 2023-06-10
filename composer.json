@@ -1,0 +1,36 @@
+{
+    "name": "lion9966/think-permission",
+    "description": "thinkphp 6 permission 权限管理",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lion9966",
+            "email": "lion9966@163.com"
+        }
+    ],
+    "keywords": [
+        "permission",
+        "think-permission"
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4",
+        "lion9966/think-exception": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "lion9966\\Permission\\": "src"
+        }
+    },
+    "extra": {
+        "think": {
+            "services": [
+                "lion9966\\Permission\\PermissionService"
+            ],
+            "config": {
+                "permission": "config/config.php"
+            }
+        }
+    }
+}
