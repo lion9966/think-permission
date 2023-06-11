@@ -34,9 +34,13 @@ class Install extends Command
     {
         $dataType = config('database.default');
         $prefix   = config('database.connections.' . $dataType . '.prefix');
+        $database = config('database.connections.' . $dataType . '.database');
 
         $sql     = "SHOW TABLES";
         $data    = Db::query($sql);
+        if (!empty($data)) {
+            $data = array_column($data, "Tables_in_" . $database);
+        }
         $needle  = ['permission', 'role', 'user', 'role_permission_access', 'user_role_access'];
         $hasBase = [];
         foreach ($needle as $value) {
