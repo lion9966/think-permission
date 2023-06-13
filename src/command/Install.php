@@ -34,9 +34,13 @@ class Install extends Command
     {
         $dataType = config('database.default');
         $prefix   = config('database.connections.' . $dataType . '.prefix');
+        $database = config('database.connections.' . $dataType . '.database');
 
-        $sql     = "SHOW TABLES";
-        $data    = Db::query($sql);
+        $sql  = "SHOW TABLES";
+        $data = Db::query($sql);
+        if (!empty($data)) {
+            $data = array_column($data, "Tables_in_" . $database);
+        }
         $needle  = ['permission', 'role', 'user', 'role_permission_access', 'user_role_access'];
         $hasBase = [];
         foreach ($needle as $value) {
@@ -59,6 +63,7 @@ class Install extends Command
     {
         $str = "`id` int(11) NOT NULL AUTO_INCREMENT," . "\n";
         $str .= "`name` varchar(100) NOT NULL COMMENT '规则唯一标识'," . "\n";
+        $str .= "`status` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '状态'," . "\n";
         $str .= "PRIMARY KEY (`id`)," . "\n";
         $str .= "UNIQUE KEY `name` (`name`)" . "\n";
         $str .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限规则表';";
@@ -73,6 +78,7 @@ class Install extends Command
     {
         $str = "`id` int(11) NOT NULL AUTO_INCREMENT," . "\n";
         $str .= "`name` varchar(100) NOT NULL COMMENT '角色唯一标识'," . "\n";
+        $str .= "`status` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '状态'," . "\n";
         $str .= "PRIMARY KEY (`id`)," . "\n";
         $str .= "UNIQUE KEY `name` (`name`)" . "\n";
         $str .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';";
@@ -87,6 +93,7 @@ class Install extends Command
     {
         $str = "`id` int(11) NOT NULL AUTO_INCREMENT," . "\n";
         $str .= "`name` varchar(50) NOT NULL COMMENT '用户唯一标识'," . "\n";
+        $str .= "`status` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '状态'," . "\n";
         $str .= "PRIMARY KEY (`id`)," . "\n";
         $str .= "UNIQUE KEY `name` (`name`)" . "\n";
         $str .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';";

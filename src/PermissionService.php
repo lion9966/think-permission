@@ -20,7 +20,7 @@ class PermissionService extends \think\Service
 
     public function boot()
     {
-        $this->commamds([
+        $this->commands([
             PermissionInstall::class,
         ]);
     }
