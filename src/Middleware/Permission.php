@@ -80,7 +80,7 @@ class Permission implements PermissionMiddlewareContract
     {
         if (!Lang::has($name)) {
             $getLangSet = Lang::getLangSet();
-            Lang::load([app_path() . DIRECTORY_SEPARATOR . 'lion9966' . DIRECTORY_SEPARATOR . 'permission' . DIRECTORY_SEPARATOR . 'Lang' . DIRECTORY_SEPARATOR . $getLangSet . '.php']);
+            Lang::load([__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Lang' . DIRECTORY_SEPARATOR . $getLangSet . '.php']);
         }
         return Lang::get($name);
 
